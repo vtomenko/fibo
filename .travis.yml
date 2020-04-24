@@ -15,7 +15,7 @@ after_success:
   - docker build -t vtomenko/fibo-nginx ./nginx
   - docker build -t vtomenko/fibo-server ./server
   - docker build -t vtomenko/fibo-worker ./worker
-  - echo "$DOCKER_HUB_PASSWORD" | docker login https://index.docker.io -u $DOCKER_HUB_USERNAME --password-stdin
+  - echo "$DOCKER_HUB_PASSWORD" | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
   - docker push vtomenko/fibo-client
   - docker push vtomenko/fibo-nginx
   - docker push vtomenko/fibo-server
