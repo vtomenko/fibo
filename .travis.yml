@@ -5,19 +5,32 @@ services:
   - docker
 
 before_install:
-  - docker build -t vtomenko/fibo -f Dockerfile.dev .
+  - docker build -t vtomenko/fibo-client -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true vtomenko/fibo npm run test
+  - docker run -e CI=true vtomenko/fibo-client npm run test
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "react-docker-demo"
-  env: "ReactDockerDemo-env"
-  bucket_name: "elasticbeanstalk-us-east-1-004891899541"
-  bucket_path: "react-docker-demo"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+after_success:
+  - docker build -t vtomenko/fibo-client ./client
+  - docker build -t vtomenko/fibo-nginx ./nginx
+  - docker build -t vtomenko/fibo-server ./server
+  - docker build -t vtomenko/fibo-worker ./worker
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u $DOCKER_HUB_USERNAME --password-stdin
+  - docker push vtomenko/fibo-client
+  - docker push vtomenko/fibo-nginx
+  - docker push vtomenko/fibo-server
+  - docker push vtomenko/fibo-worker
+
+
+
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-east-1"
+#  app: "react-docker-demo"
+#  env: "ReactDockerDemo-env"
+#  bucket_name: "elasticbeanstalk-us-east-1-004891899541"
+#  bucket_path: "react-docker-demo"
+#  on:
+#    branch: master
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
