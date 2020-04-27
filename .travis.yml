@@ -21,16 +21,17 @@ after_success:
   - docker push vtomenko/fibo-server
   - docker push vtomenko/fibo-worker
 
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "fib"
+  env: "Fib-env"
+  bucket_name: "elasticbeanstalk-us-east-1-004891899541"
+  bucket_path: "fib"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_ACCESS_SECRET
 
 
-#deploy:
-#  provider: elasticbeanstalk
-#  region: "us-east-1"
-#  app: "react-docker-demo"
-#  env: "ReactDockerDemo-env"
-#  bucket_name: "elasticbeanstalk-us-east-1-004891899541"
-#  bucket_path: "react-docker-demo"
-#  on:
-#    branch: master
-#  access_key_id: $AWS_ACCESS_KEY
-#  secret_access_key: $AWS_SECRET_KEY
