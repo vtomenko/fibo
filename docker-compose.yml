@@ -24,6 +24,7 @@ services:
       - PGUSER=postgres
       - PGDATABASE=postgres
       - PGPASSWORD=postgres
+
   client:
     stdin_open: true
     build:
