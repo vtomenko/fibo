@@ -1,5 +1,6 @@
 language: generic
-sudo: required
+os: linux
+dist: xenial
 
 services:
   - docker
@@ -27,7 +28,7 @@ deploy:
   region: "us-east-1"
   app: "fib"
   env: "Fib-env"
-  bucket_name: "elasticbeanstalk-us-east-1-004891899541"
+  bucket: "elasticbeanstalk-us-east-1-004891899541"
   bucket_path: "fib"
   on:
     branch: master
