@@ -22,6 +22,7 @@ after_success:
   - docker push vtomenko/fibo-server
   - docker push vtomenko/fibo-worker
 
+
 deploy:
   edge: true
   provider: elasticbeanstalk
